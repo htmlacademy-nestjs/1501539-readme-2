@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
-* Студент: [Михаил Беспятов](https://up.htmlacademy.ru/nodejs-2-individual/2/user/1501539).
-* Наставник: `Неизвестно`.
+- Студент: [Михаил Беспятов](https://up.htmlacademy.ru/nodejs-2-individual/2/user/1501539).
+- Наставник: Владислав Поклонский.
 
 ---
 
