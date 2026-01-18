@@ -1,0 +1,16 @@
+POST http://localhost:3000/api/publications/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "text",
+  "title": "Моя Первая Публикация",
+  "announcement": "announcement",
+  "text": "бэк это не просто"
+}
+
+###
+
+GET http://localhost:3000/api/publications?type=text HTTP/1.1
+Content-Type: application/json
+
+###
