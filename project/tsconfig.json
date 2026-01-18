@@ -7,22 +7,25 @@
       "path": "./apps/account"
     },
     {
-      "path": "./apps/blog-e2e"
-    },
-    {
       "path": "./apps/blog"
-    },
-    {
-      "path": "./apps/file-management-e2e"
     },
     {
       "path": "./apps/file-management"
     },
     {
-      "path": "./apps/notifications-e2e"
+      "path": "./apps/notifications"
     },
     {
-      "path": "./apps/notifications"
+      "path": "./libs/shared/constants"
+    },
+    {
+      "path": "./libs/shared/types"
+    },
+    {
+      "path": "./libs/shared/helpers"
+    },
+    {
+      "path": "./libs/repository"
     }
   ]
 }

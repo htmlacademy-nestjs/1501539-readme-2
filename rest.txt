@@ -1,0 +1,26 @@
+publications - get (params - page, pageLimit, sortBy - popular, createdAt, likesCount, commentsCount
+filterBy - tags, searchBy - title)
+  /create
+  /:id - get
+  /:id - patch
+  /:id - delete
+  /:id/images - get
+comments
+  /create - post
+  /:publicationId - get
+  /:id - delete
+likes
+  /:publicationId - get
+  /:publicationId - post
+  /:publicationId - delete
+feed
+  /repost
+  /subscribe
+  /:userId
+
+file-management
+  /:userId/upload
+  /:userId
+  /:publicationId/upload
+  /:publicationId
+
