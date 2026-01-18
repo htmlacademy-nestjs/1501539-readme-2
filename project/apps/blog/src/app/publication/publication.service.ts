@@ -7,10 +7,16 @@ import { DEFAULT_LIMIT, DEFAULT_PAGE } from './publication.constant';
 import { PublicationParams } from './types/publication-params.interface';
 import { PublicationSortRows } from './types/publication-sort-rows.enum';
 import { UpdatePublicationDto } from './dto/update-publication.dto';
+import { LikeRepository } from '../like/like.repository';
+import { CommentRepository } from '../comment/comment.repository';
 
 @Injectable()
 export class PublicationService {
-  constructor(private readonly publicationRepository: PublicationRepository) {}
+  constructor(
+    private readonly publicationRepository: PublicationRepository,
+    private readonly likeRepository: LikeRepository,
+    private readonly commentRepository: CommentRepository
+  ) {}
 
   public async create(dto: CreatePublicationDto) {
     const now = new Date();
@@ -38,7 +44,9 @@ export class PublicationService {
   }
 
   public async deleteById(id:string) {
-    return await this.publicationRepository.delete(id);
+    await this.publicationRepository.delete(id);
+    await this.commentRepository.deleteByPublicationId(id);
+    await this.likeRepository.deleteByPublicationId(id);
   }
 
   public async findAll(query: PublicationParams) {

@@ -12,4 +12,10 @@ export class LikeRepository extends BaseMemoryRepository<LikeEntity> {
     }
     return like
   }
+
+  public async deleteByPublicationId(publicationId: string) {
+    const entityArray = Array.from(this.entities.values());
+    const filteredEntityArray = entityArray.filter((entity) => entity.publicationId === publicationId);
+    filteredEntityArray.forEach(async (entity) => this.delete(entity.id));
+  }
 }

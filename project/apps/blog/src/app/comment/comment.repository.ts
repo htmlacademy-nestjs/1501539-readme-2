@@ -9,4 +9,10 @@ export class CommentRepository extends BaseMemoryRepository<CommentEntity> {
     const {limit, page} = pagination;
     return entityArray.filter((entity) => entity.publicationId === publicationId).slice(page*limit, (page+1)*limit);
   }
+
+  public async deleteByPublicationId(publicationId: string) {
+    const entityArray = Array.from(this.entities.values());
+    const filteredEntityArray = entityArray.filter((entity) => entity.publicationId === publicationId);
+    filteredEntityArray.forEach(async (entity) => this.delete(entity.id));
+  }
 }
