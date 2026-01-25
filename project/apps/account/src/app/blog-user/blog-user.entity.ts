@@ -13,20 +13,21 @@ export class BlogUserEntity implements AuthUser, Entity<string> {
    public followersCount!: number;
    public publicationsCount!: number;
 
-   constructor(user: AuthUser) {
+  constructor(user: AuthUser) {
     this.populate(user);
-   }
+  }
 
-   public populate(data: AuthUser) {
+  public populate(data: AuthUser) {
     this.email = data.email;
     this.name = data.name;
     this.avatar = data.avatar;
     this.createdAt = data.createdAt;
     this.followersCount = data.followersCount;
     this.publicationsCount = data.publicationsCount;
-   }
+    this.passwordHash = data.passwordHash ?? this.passwordHash;
+  }
 
-   public toPOJO() {
+  public toPOJO() {
     return {
       id: this.id,
       email: this.email,
@@ -37,15 +38,22 @@ export class BlogUserEntity implements AuthUser, Entity<string> {
       publicationsCount: this.publicationsCount,
       passwordHash: this.passwordHash,
     };
-   }
+  }
 
-   public async setPassword(password: string): Promise<BlogUserEntity> {
+  public async setPassword(password: string): Promise<BlogUserEntity> {
     const salt = await genSalt(SALT_ROUNDS);
     this.passwordHash = await hash(password, salt);
     return this;
-   }
+  }
 
-   public async comparePassword(password: string): Promise<boolean> {
+  public async comparePassword(password: string): Promise<boolean> {
+    if (!this.passwordHash) {
+      return false;
+    }
     return await compare(password, this.passwordHash);
-   }
+  }
+
+  static fromObject(data: AuthUser): BlogUserEntity {
+    return new BlogUserEntity(data);
+  }
 }

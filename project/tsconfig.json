@@ -26,6 +26,12 @@
     },
     {
       "path": "./libs/repository"
+    },
+    {
+      "path": "./libs/config/account"
+    },
+    {
+      "path": "./libs/validator"
     }
   ]
 }
