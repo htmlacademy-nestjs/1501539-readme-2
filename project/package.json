@@ -6,13 +6,17 @@
   "private": true,
   "dependencies": {
     "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/mongoose": "^11.0.4",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/swagger": "^11.2.4",
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
     "dayjs": "^1.11.19",
+    "mongoose": "^9.1.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0"
   },
@@ -47,6 +51,8 @@
     "libs/shared/constants",
     "libs/shared/types",
     "libs/shared/helpers",
-    "libs/repository"
+    "libs/repository",
+    "libs/config/account",
+    "libs/validator"
   ]
 }
