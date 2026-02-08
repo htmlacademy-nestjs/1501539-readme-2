@@ -74,6 +74,31 @@
             "buildTarget": "@project/blog:build:production"
           }
         }
+      },
+      "db": {
+        "executor": "nx:run-commands",
+        "configurations": {
+          "lint": {
+            "command": "npx prisma validate --schema libs/models/blog-model/src/prisma/schema.prisma",
+            "cwd": "{workspaceRoot}",
+            "envFile": "../../libs/models/blog-model/.env"
+          },
+          "migrate": {
+            "command": "npx prisma migrate dev --schema libs/models/blog-model/src/prisma/schema.prisma",
+            "cwd": "{workspaceRoot}",
+            "envFile": "../../libs/models/blog-model/.env"
+          },
+          "reset": {
+            "command": "npx prisma migrate reset --schema libs/models/blog-model/src/prisma/schema.prisma",
+            "cwd": "{workspaceRoot}",
+            "envFile": "../../libs/models/blog-model/.env"
+          },
+          "generate": {
+            "command": "npx prisma generate --schema libs/models/blog-model/src/prisma/schema.prisma",
+            "cwd": "{workspaceRoot}",
+            "envFile": "../../libs/models/blog-model/.env"
+          }
+        }
       }
     }
   },
@@ -81,6 +106,7 @@
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
+    "@prisma/client": "^7.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0"

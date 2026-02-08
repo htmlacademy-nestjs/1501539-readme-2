@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Post {
+  id            String            @id @default(uuid())
+  type          PublicationType
+  authorId      String            @map("author_id")
+  status        PublicationStatus
+  likesCount    Int               @map("likes_count")
+  commentsCount Int               @map("comments_count")
+  tags          String[]
+  title         String?
+  videoUrl      String?           @map("video_url")
+  announcement  String?
+  text          String?
+  image         String?
+  quoteAuthor   String?           @map("quote_author")
+  link          String?
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+  likes         Like[]
+  comments      Comment[]
+
+  @@map("posts")
+}
+
+enum PublicationType {
+  VIDEO @map("video")
+  TEXT  @map("text")
+  IMAGE @map("image")
+  QUOTE @map("quote")
+  LINK  @map("link")
+}
+
+enum PublicationStatus {
+  PUBLISHED @map("published")
+  DRAFT     @map("draft")
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@map("likes")
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
