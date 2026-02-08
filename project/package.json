@@ -17,6 +17,7 @@
     "class-validator": "^0.14.3",
     "dayjs": "^1.11.19",
     "mongoose": "^9.1.5",
+    "prisma": "^7.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0"
   },
@@ -53,6 +54,7 @@
     "libs/shared/helpers",
     "libs/repository",
     "libs/config/account",
-    "libs/validator"
+    "libs/validator",
+    "libs/models/blog-model"
   ]
 }
