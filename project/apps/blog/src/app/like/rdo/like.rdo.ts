@@ -6,11 +6,11 @@ export class LikeRdo {
   @Expose()
   public id!: string;
 
-  @ApiProperty({ type: String, description: 'publication id', example: 'e483e4ee-cc31-49e8-8a52-cf05c1c6db2c' })
+  @ApiProperty({ type: String, description: 'post id', example: 'e483e4ee-cc31-49e8-8a52-cf05c1c6db2c' })
   @Expose()
-  public publicationId!: string;
+  public postId!: string;
 
-  @ApiProperty({ type: String, description: 'author id', example: 'e483e4ee-cc31-49e8-8a52-cf05c1c6db2c' })
+  @ApiProperty({ type: String, description: 'user id', example: 'e483e4ee-cc31-49e8-8a52-cf05c1c6db2c' })
   @Expose()
-  public authorId!: string;
+  public userId!: string;
 }

@@ -1,16 +1,16 @@
 import { randomUUID } from "node:crypto";
-import { Entity, EntityIdType } from "./entity.interface";
+import { DefaultPojoType, Entity, EntityIdType } from "./entity.interface";
 import { Repository } from "./repository.interface";
 
-export class BaseMemoryRepository<T extends Entity<EntityIdType>> implements Repository<T> {
-  protected readonly entities: Map<T['id'], T> = new Map();
+export class BaseMemoryRepository<EntityType extends Entity<EntityIdType, PojoType>, PojoType = DefaultPojoType> implements Repository<EntityType, PojoType> {
+  protected readonly entities: Map<EntityType['id'], EntityType> = new Map();
 
-  public async findById(id: T['id']): Promise<T | null> {
+  public async findById(id: EntityType['id']): Promise<EntityType | null> {
     const entity = this.entities.get(id);
     return Promise.resolve(entity || null);
   }
 
-  public async save(entity: T): Promise<T> {
+  public async save(entity: EntityType): Promise<EntityType> {
     if (!entity.id) {
       entity.id = randomUUID();
     }
@@ -18,7 +18,7 @@ export class BaseMemoryRepository<T extends Entity<EntityIdType>> implements Rep
     return entity;
   }
 
-  public async update(id: T['id'], entity: T): Promise<T> {
+  public async update(id: EntityType['id'], entity: EntityType): Promise<EntityType> {
     if (!this.entities.has(id)) {
       throw new Error(`Entity with id ${id} does not exist`);
     }
@@ -26,7 +26,7 @@ export class BaseMemoryRepository<T extends Entity<EntityIdType>> implements Rep
     return entity;
   }
 
-  public async delete(id: T['id']): Promise<void> {
+  public async delete(id: EntityType['id']): Promise<void> {
     this.entities.delete(id);
   }
 }

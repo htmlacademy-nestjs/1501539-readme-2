@@ -12,3 +12,5 @@ coverage
 .cursorignore
 *.env
 /db/
+.npmrc
+**/uploads/*

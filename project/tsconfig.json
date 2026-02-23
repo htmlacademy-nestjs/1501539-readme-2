@@ -35,6 +35,18 @@
     },
     {
       "path": "./libs/models/blog-model"
+    },
+    {
+      "path": "./libs/config/blog"
+    },
+    {
+      "path": "./libs/pipes"
+    },
+    {
+      "path": "./libs/token"
+    },
+    {
+      "path": "./libs/config/file-management"
     }
   ]
 }

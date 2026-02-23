@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Query } from '@nestjs/common';
 import { LikeService } from './like.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -23,6 +23,9 @@ export class LikeController {
   @Get(':id')
   public async get(@Param('id') id: string, @Query('authorId') authorId: string) {
     const like = await this.likeService.find(id, authorId);
+    if (!like) {
+      throw new NotFoundException(`Like with id: ${id} and user with id: ${authorId} not found`);
+    }
     return fillDto(LikeRdo, like.toPOJO())
   }
 

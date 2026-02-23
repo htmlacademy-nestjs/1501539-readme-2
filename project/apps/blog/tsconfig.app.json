@@ -20,13 +20,19 @@
       "path": "../../libs/shared/constants/tsconfig.lib.json"
     },
     {
-      "path": "../../libs/shared/helpers/tsconfig.lib.json"
+      "path": "../../libs/shared/types/tsconfig.lib.json"
     },
     {
       "path": "../../libs/repository/tsconfig.lib.json"
     },
     {
-      "path": "../../libs/shared/types/tsconfig.lib.json"
+      "path": "../../libs/shared/helpers/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/config/blog/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/models/blog-model/tsconfig.lib.json"
     }
   ]
 }

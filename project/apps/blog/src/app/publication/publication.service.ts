@@ -7,26 +7,32 @@ import { DEFAULT_LIMIT, DEFAULT_PAGE } from './publication.constant';
 import { PublicationParams } from './types/publication-params.interface';
 import { PublicationSortRows } from './types/publication-sort-rows.enum';
 import { UpdatePublicationDto } from './dto/update-publication.dto';
-import { LikeRepository } from '../like/like.repository';
-import { CommentRepository } from '../comment/comment.repository';
 
 @Injectable()
 export class PublicationService {
   constructor(
     private readonly publicationRepository: PublicationRepository,
-    private readonly likeRepository: LikeRepository,
-    private readonly commentRepository: CommentRepository
   ) {}
 
   public async create(dto: CreatePublicationDto) {
     const now = new Date();
-    const publication = await new PublicationEntity({
+    const publication = new PublicationEntity({
       createdAt: now,
       publicatedAt: now,
       status: PublicationStatus.PUBLISHED,
       likesCount: 0,
       commentsCount: 0,
-      ...dto  });
+      tags: dto.tags ?? [],
+      type: dto.type,
+      authorId: dto.authorId,
+      title: dto.title ?? null,
+      videoUrl: dto.videoUrl ?? null,
+      announcement: dto.announcement ?? null,
+      text: dto.text ?? null,
+      image: typeof dto.image === 'string' ? dto.image : null,
+      quoteAuthor: dto.quoteAuthor ?? null,
+      link: dto.link ?? null,
+    });
     return await this.publicationRepository.save(publication);
   }
 
@@ -44,9 +50,11 @@ export class PublicationService {
   }
 
   public async deleteById(id:string) {
+    const deletedPublication = await this.publicationRepository.findById(id);
+    if (!deletedPublication) {
+      throw new NotFoundException(`publication with id: ${id} not found`);
+    }
     await this.publicationRepository.delete(id);
-    await this.commentRepository.deleteByPublicationId(id);
-    await this.likeRepository.deleteByPublicationId(id);
   }
 
   public async findAll(query: PublicationParams) {

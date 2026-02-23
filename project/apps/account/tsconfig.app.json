@@ -23,6 +23,12 @@
       "path": "../../libs/repository/tsconfig.lib.json"
     },
     {
+      "path": "../../libs/token/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/pipes/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/shared/helpers/tsconfig.lib.json"
     },
     {

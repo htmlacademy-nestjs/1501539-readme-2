@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -10,11 +10,15 @@ async function bootstrap() {
     .setTitle('The «Account» service')
     .setDescription('Account service API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('spec', app, document);
+
+  app.useGlobalPipes(new ValidationPipe({transform: true}));
+
   const configService = app.get(ConfigService);
   const port = configService.get('app.port');
   await app.listen(port);

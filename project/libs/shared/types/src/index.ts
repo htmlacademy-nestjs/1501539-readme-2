@@ -5,3 +5,5 @@ export * from './lib/publication.interface.js';
 export * from './lib/publication-status.enum.js';
 export * from './lib/comment.interface.js';
 export * from './lib/like.interface.js';
+export * from './lib/file.interface.js';
+export * from './lib/stored-file.interface.js';

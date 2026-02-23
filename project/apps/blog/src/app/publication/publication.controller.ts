@@ -50,7 +50,9 @@ export class PublicationController {
   @Get('/')
   public async index(@Query() params: PublicationParams) {
     const publications = await this.publicationService.findAll(params);
-    return publications.map((publication) => fillDtoByType(publication));
+    return publications
+      .filter((p): p is NonNullable<typeof p> => p != null)
+      .map((publication) => fillDtoByType(publication));
   }
 
   @ApiResponse({status: HttpStatus.OK, description: 'publication details', example: EXAMPLE_PUBLICATION })
@@ -84,7 +86,9 @@ export class PublicationController {
   @ApiQuery({ name: 'page', required: false, type: Number, example: '0', description: 'page number' })
   @Post('author/:id')
   public async getAuthorPublications(@Param('id') id: string, @Query('page') page: string) {
-    const authorPublications = await this.publicationService.findByAuthorId(id, page)
-    return authorPublications.map((publication) => fillDtoByType(publication));
+    const authorPublications = await this.publicationService.findByAuthorId(id, page);
+    return authorPublications
+      .filter((p): p is NonNullable<typeof p> => p != null)
+      .map((publication) => fillDtoByType(publication));
   }
 }
