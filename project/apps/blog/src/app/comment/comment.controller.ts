@@ -18,14 +18,14 @@ export class CommentController {
   }
 
   @ApiResponse({type: [CommentRdo], description: 'comment create'})
-  @Get(':publicationId')
-  public async getByPublicationId(@Param('publicationId') publicationId: string, @Query('page') page: string) {
-    const comments = await this.commentService.findByPublicationId(publicationId, page);
+  @Get(':postId')
+  public async getByPostId(@Param('postId') postId: string, @Query('page') page: string) {
+    const comments = await this.commentService.findByPostId(postId, page);
     return comments.map((comment) => fillDto(CommentRdo, comment.toPOJO()))
   }
 
   @Delete(':id')
-  public async delete(@Param('id') id: string, @Query('authorId') authorId: string) {
-    await this.commentService.deleteById(id, authorId)
+  public async delete(@Param('id') id: string, @Query('userId') userId: string) {
+    await this.commentService.deleteById(id, userId)
   }
 }

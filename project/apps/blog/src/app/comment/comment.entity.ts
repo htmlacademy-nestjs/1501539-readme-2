@@ -3,9 +3,9 @@ import { Comment } from '@project/types'
 
 export class CommentEntity implements Comment, Entity<string> {
   public id?:string;
-  public publicationId!: string;
-  public text!: string;
-  public authorId!: string;
+  public postId!: string;
+  public content!: string;
+  public userId!: string;
   public createdAt!: Date;
 
   constructor(comment: Comment) {
@@ -13,19 +13,23 @@ export class CommentEntity implements Comment, Entity<string> {
   }
 
   public populate(comment: Comment) {
-    this.publicationId = comment.publicationId;
-    this.text = comment.text;
-    this.authorId = comment.authorId;
+    this.postId = comment.postId;
+    this.content = comment.content;
+    this.userId = comment.userId;
     this.createdAt = comment.createdAt;
   }
 
   public toPOJO() {
     return {
       id: this.id,
-      publicationId: this.publicationId,
-      text: this.text,
-      authorId: this.authorId,
+      postId: this.postId,
+      content: this.content,
+      userId: this.userId,
       createdAt: this.createdAt,
     }
+  }
+
+  public static fromObject(object: Comment): CommentEntity {
+    return new CommentEntity(object);
   }
 }

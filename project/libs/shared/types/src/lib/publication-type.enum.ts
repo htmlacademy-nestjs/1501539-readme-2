@@ -1,7 +1,2 @@
-export enum PublicationType {
-  VIDEO = 'video',
-  TEXT = 'text',
-  IMAGE = 'image',
-  QUOTE = 'quote',
-  LINK = 'link',
-}
+// Re-export Prisma enum to use as single source of truth
+export { PublicationType } from '@project/blog-model';

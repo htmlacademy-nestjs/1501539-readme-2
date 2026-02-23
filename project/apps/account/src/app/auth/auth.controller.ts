@@ -1,11 +1,13 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { fillDto } from '@project/helpers';
 import { UserRdo } from './rdo/user.rdo';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { MongoIdValidationPipe } from '@project/pipes';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -26,13 +28,16 @@ export class AuthController {
   @Post('login')
   public async login(@Body() dto: LoginUserDto) {
     const user = await this.authService.verifyUser(dto);
-    return fillDto(LoggedUserRdo, user.toPOJO());
+    const token = await this.authService.createUserToken(user);
+    return fillDto(LoggedUserRdo, { ...user.toPOJO(), accessToken: token.accessToken });
   }
 
   @ApiResponse({ type: UserRdo, status: HttpStatus.OK, description: 'User has been successfully found.' })
   @ApiResponse({ status: HttpStatus.NOT_FOUND, description: 'User not found.' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
-  public async getUser(@Param('id') id: string) {
+  public async getUser(@Param('id', MongoIdValidationPipe) id: string) {
     const user = await this.authService.getUser(id);
     return fillDto(UserRdo, user.toPOJO());
   }

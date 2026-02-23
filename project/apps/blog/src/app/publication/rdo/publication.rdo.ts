@@ -1,14 +1,13 @@
 import { Expose } from "class-transformer";
 import { PublicationType, PublicationStatus } from '@project/types';
 import { ApiProperty } from "@nestjs/swagger";
-import type { User }  from '@project/types';
 
 export class PublicationRdo {
   @ApiProperty({type: String, example: '14320425-9270-4b8d-ab1d-50769f899847', description: 'publication id'})
   @Expose()
   public id!: string;
 
-  @ApiProperty({enum: PublicationType, example: 'text', description: 'publication type'})
+  @ApiProperty({enum: PublicationType, example: 'TEXT', description: 'publication type'})
   @Expose()
   public type!: PublicationType;
 
@@ -25,18 +24,11 @@ export class PublicationRdo {
   public publicatedAt!: Date;
 
   @ApiProperty({
-    type: Object,
-    example: {
-      "id": "07a0f783-b4cb-4fa2-87ac-a358fcdd4b24",
-      "email": "user@notfound.local",
-      "name": "Keks",
-      "createdAt": "2026-01-10T12:45:46.016Z",
-      "followersCount": 0,
-      "publicationsCount": 0
-    },
-    description: 'publication author'})
+    type: String,
+    example: "07a0f783-b4cb-4fa2-87ac-a358fcdd4b24",
+    description: 'publication authorId'})
   @Expose()
-  public author!: User;
+  public authorId!: string;
 
   @ApiProperty({enum: PublicationStatus, example: 'published', description: 'publication status'})
   @Expose()
